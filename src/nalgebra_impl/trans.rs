@@ -1,5 +1,5 @@
 use crate::{SO3, se3, so3, utils::approx_zero};
-use nalgebra::{Matrix3, Matrix4, Matrix6, Vector6};
+use nalgebra::{Matrix3, Matrix4, Matrix6, Vector3, Vector6};
 
 use crate::{
     Real, SE3,
@@ -96,5 +96,22 @@ where
             res.view_mut((0, 3), (3, 1)).copy_from(&(vv * v / theta));
             res
         }
+    }
+
+    type Adj = Matrix6<T>;
+
+    fn adj(&self) -> Self::Adj {
+        let w = Vector3::new(self[0], self[1], self[2]);
+        let v = Vector3::new(self[3], self[4], self[5]);
+        let v = hat(&v);
+        let w = hat(&w);
+
+        let mut res = Matrix6::zeros();
+
+        res.view_mut((0, 0), (3, 3)).copy_from(&w);
+        res.view_mut((3, 3), (3, 3)).copy_from(&w);
+        res.view_mut((3, 0), (3, 3)).copy_from(&v);
+
+        res
     }
 }

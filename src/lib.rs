@@ -17,7 +17,9 @@ mod utils;
 
 pub trait se3 {
     type SE3;
+    type Adj;
     fn exp(&self) -> Self::SE3;
+    fn adj(&self) -> Self::Adj;
 }
 
 pub trait SE3 {
