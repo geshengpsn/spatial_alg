@@ -57,8 +57,8 @@ where
 
     type adjoint = Matrix6<T>;
     /// # spatial_alg SE3
-    /// adjoint
-    fn adjoint(&self) -> Self::adjoint {
+    /// adjoint of lee group
+    fn lee_adjoint(&self) -> Self::adjoint {
         let r = self.fixed_view::<3, 3>(0, 0);
         let p = self.fixed_view::<3, 1>(0, 3);
 

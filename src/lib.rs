@@ -25,7 +25,7 @@ pub trait SE3 {
     type adjoint;
     fn log(&self) -> Self::se3;
     fn inv(&self) -> Self;
-    fn adjoint(&self) -> Self::adjoint;
+    fn lee_adjoint(&self) -> Self::adjoint;
 }
 
 pub trait so3 {
