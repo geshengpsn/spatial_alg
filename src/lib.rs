@@ -37,7 +37,7 @@ pub trait SO3 {
     type so3;
     fn log(&self) -> Self::so3;
     fn inv(&self) -> Self;
-    fn adjoint(&self) -> Self;
+    // fn adjoint(&self) -> Self;
 }
 
 pub mod prelude {

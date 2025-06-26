@@ -42,9 +42,9 @@ where
         self.transpose()
     }
 
-    fn adjoint(&self) -> Self {
-        *self
-    }
+    // fn adjoint(&self) -> Self {
+    //     *self
+    // }
 }
 
 impl<T> so3 for Vector3<T>
