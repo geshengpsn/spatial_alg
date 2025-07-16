@@ -1,17 +1,16 @@
 use nalgebra::{Matrix3, Vector3};
 
 use crate::{
-    Real, SO3, so3,
-    utils::{approx_zero, axis_angle, hat, length},
+    so3, utils::{approx_zero, axis_angle, hat, length, vee}, Real, SO3
 };
 
-impl<T> SO3 for Matrix3<T>
+impl<T> SO3<Vector3<T>> for Matrix3<T>
 where
     T: Real,
 {
-    type so3 = Vector3<T>;
+    // type so3 = Vector3<T>;
 
-    fn log(&self) -> Self::so3 {
+    fn log(&self) -> Vector3<T> {
         let rot = self;
         let one: T = T::one();
         let two = one + one;
@@ -61,5 +60,31 @@ where
             let w_so3 = hat(&w);
             Matrix3::identity() + w_so3 * angle.sin() + w_so3 * w_so3 * (T::one() - angle.cos())
         }
+    }
+}
+
+
+impl<T> SO3<Matrix3<T>> for Matrix3<T>
+where
+    T: Real,
+{
+    fn log(&self) -> Matrix3<T> {
+        let a: Vector3<T> = self.log();
+        hat(&a)
+    }
+
+    fn inv(&self) -> Self {
+        self.transpose()
+    }
+}
+
+impl<T> so3 for Matrix3<T>
+where
+    T: Real,
+{
+    type SO3 = Matrix3<T>;
+
+    fn exp(&self) -> Self::SO3 {
+        vee(self).exp()
     }
 }

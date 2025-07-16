@@ -1,4 +1,7 @@
-use crate::{SO3, se3, so3, utils::approx_zero};
+use crate::{
+    SO3, se3, so3,
+    utils::{approx_zero, hat_se3, vee_se3},
+};
 use nalgebra::{Matrix3, Matrix4, Matrix6, Vector3, Vector6};
 
 use crate::{
@@ -6,15 +9,15 @@ use crate::{
     utils::{approx_zero_vec, axis_angle, hat},
 };
 
-impl<T> SE3 for Matrix4<T>
+impl<T> SE3<Vector6<T>> for Matrix4<T>
 where
     T: Real,
 {
-    type se3 = Vector6<T>;
+    // type se3 = Vector6<T>;
 
     /// # spatial_alg SE3
     /// log projection
-    fn log(&self) -> Self::se3 {
+    fn log(&self) -> Vector6<T> {
         let r = self.fixed_view::<3, 3>(0, 0);
         let p = self.fixed_view::<3, 1>(0, 3);
         let w = r.into_owned().log();
@@ -113,5 +116,42 @@ where
         res.view_mut((3, 0), (3, 3)).copy_from(&v);
 
         res
+    }
+}
+
+impl<T> SE3<Matrix4<T>> for Matrix4<T>
+where
+    T: Real,
+{
+    type adjoint = Matrix6<T>;
+
+    fn log(&self) -> Matrix4<T> {
+        let v: Vector6<T> = self.log();
+        hat_se3(&v)
+    }
+
+    fn inv(&self) -> Self {
+        SE3::<Vector6<T>>::inv(self)
+    }
+
+    fn lee_adjoint(&self) -> Self::adjoint {
+        SE3::<Vector6<T>>::lee_adjoint(self)
+    }
+}
+
+impl<T> se3 for Matrix4<T>
+where
+    T: Real,
+{
+    type SE3 = Matrix4<T>;
+
+    type Adj = Matrix6<T>;
+
+    fn exp(&self) -> Self::SE3 {
+        vee_se3(self).exp()
+    }
+
+    fn adj(&self) -> Self::Adj {
+        vee_se3(self).adj()
     }
 }

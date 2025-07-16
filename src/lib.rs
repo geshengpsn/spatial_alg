@@ -22,10 +22,10 @@ pub trait se3 {
     fn adj(&self) -> Self::Adj;
 }
 
-pub trait SE3 {
-    type se3;
+pub trait SE3<se3> {
+    // type se3;
     type adjoint;
-    fn log(&self) -> Self::se3;
+    fn log(&self) -> se3;
     fn inv(&self) -> Self;
     fn lee_adjoint(&self) -> Self::adjoint;
 }
@@ -35,11 +35,10 @@ pub trait so3 {
     fn exp(&self) -> Self::SO3;
 }
 
-pub trait SO3 {
-    type so3;
-    fn log(&self) -> Self::so3;
+pub trait SO3<so3> {
+    // type so3;
+    fn log(&self) -> so3;
     fn inv(&self) -> Self;
-    // fn adjoint(&self) -> Self;
 }
 
 pub mod prelude {
