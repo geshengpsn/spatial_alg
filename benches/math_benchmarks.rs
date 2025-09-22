@@ -1,5 +1,5 @@
+use criterion::{Criterion, criterion_group, criterion_main};
 use std::hint::black_box;
-use criterion::{criterion_group, criterion_main, Criterion};
 
 fn vec3(c: &mut Criterion) {
     // vec3 add
@@ -53,7 +53,7 @@ fn vec3(c: &mut Criterion) {
         bencher.iter(|| black_box(&a).cross(black_box(&b)))
     });
     group.bench_function("wide vec3 cross", |bencher| {
-        use wide::{f64x4, u64x4};
+        use wide::f64x4;
         let a = f64x4::from([1.0, 2.0, 3.0, 0.0]);
         let b = f64x4::from([4.0, 5.0, 6.0, 0.0]);
         bencher.iter(|| {
