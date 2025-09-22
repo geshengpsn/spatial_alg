@@ -2,6 +2,8 @@
 name = "spatial_alg"
 version = "0.1.0"
 edition = "2024"
+description = "A Rust library for spatial algorithms."
+license = "MIT"
 
 [dependencies]
 nalgebra = "0.34.1"
