@@ -1,14 +1,11 @@
 [package]
 name = "spatial_alg"
-version = "0.1.1"
+version = "0.1.0"
 edition = "2024"
-description = "Spatial algorithms and data structures."
-license = "MIT"
 
 [dependencies]
 nalgebra = "0.34.1"
 num-traits = "0.2.19"
-faer = "0.22.6"
 wide = "0.7.33"
 
 [dev-dependencies]
