@@ -1,7 +1,7 @@
 use nalgebra::{Matrix3, Vector3};
 
 use crate::{
-    so3, utils::{approx_zero, axis_angle, hat, length, vee}, Real, SO3
+    so3, utils::{approx_zero, axis_angle, hat, length}, Real, SO3
 };
 
 impl<T> SO3 for Matrix3<T>

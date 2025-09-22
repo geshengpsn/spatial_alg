@@ -14,6 +14,7 @@ impl<T> Real for T where T: NumReal + Debug + NumAssignOps + FloatConst + 'stati
 
 mod nalgebra_impl;
 mod utils;
+pub mod algo;
 
 pub trait se3 {
     type SE3;

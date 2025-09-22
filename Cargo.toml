@@ -4,5 +4,19 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-nalgebra = "0.33.2"
+nalgebra = "0.34.1"
 num-traits = "0.2.19"
+faer = "0.22.6"
+wide = "0.7.33"
+
+[dev-dependencies]
+criterion = { version = "0.7.0", features = ["html_reports"] }
+
+[[bench]]
+name = "my_benchmark"
+harness = false
+
+[[bench]]
+name = "math_benchmarks"
+harness = false
+

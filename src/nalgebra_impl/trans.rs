@@ -1,4 +1,4 @@
-use crate::{SO3, se3, so3, utils::approx_zero};
+use crate::{SO3, se3, utils::approx_zero};
 use nalgebra::{Matrix3, Matrix4, Matrix6, Vector3, Vector6};
 
 use crate::{
@@ -88,10 +88,14 @@ where
         } else {
             let mut res = Matrix4::identity();
             let w_so3 = hat(&axis);
+            let w_so3_sq = w_so3 * w_so3;
+            let theta_sin = theta.sin();
+            let theta_cos = theta.cos();
             let vv = Matrix3::identity() * theta
-                + w_so3 * (T::one() - theta.cos())
-                + w_so3 * w_so3 * (theta - theta.sin());
-            let rot = w.exp();
+                + w_so3 * (T::one() - theta_cos)
+                + w_so3_sq * (theta - theta_sin);
+            let rot = Matrix3::identity() + w_so3 * theta_sin + w_so3_sq * (T::one() - theta_cos);
+
             res.view_mut((0, 0), (3, 3)).copy_from(&rot);
             res.view_mut((0, 3), (3, 1)).copy_from(&(vv * v / theta));
             res
