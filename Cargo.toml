@@ -8,10 +8,11 @@ license = "MIT"
 [dependencies]
 nalgebra = "0.34.1"
 num-traits = "0.2.19"
-wide = "0.7.33"
+# 
 
 [dev-dependencies]
 criterion = { version = "0.7.0", features = ["html_reports"] }
+wide = "0.7.33"
 
 [[bench]]
 name = "my_benchmark"
